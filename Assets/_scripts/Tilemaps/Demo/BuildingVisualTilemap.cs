@@ -13,7 +13,9 @@ namespace Elysium.Tilemaps
         {
             BuildingTileObject ctx = SmartTilemap.GetBuilding(_position);
             if (ctx == null) { return; }
-            ctx.gameObject = Instantiate(new GameObject(ctx.building.name), smartTilemap.Tilemap.GetCellCenterWorld(_position), Quaternion.identity);
+            ctx.gameObject = new GameObject(ctx.building.name);
+            ctx.gameObject.transform.position = smartTilemap.Tilemap.GetCellCenterWorld(_position);
+            ctx.gameObject.transform.rotation = Quaternion.identity;
             ctx.gameObject.AddComponent<SpriteRenderer>().sprite = ctx.building.sprite;
         }
 
