@@ -20,6 +20,7 @@ namespace Elysium.Tilemaps
         public void UpdateVisuals(Vector3Int _position)
         {
             BuildingTileObject ctx = SmartTilemap.GetBuilding(_position);
+            if (ctx == null) { return; }
             if (ctx.functional) { ctx.gameObject.GetComponent<SpriteRenderer>().color = Color.green; }
             else { ctx.gameObject.GetComponent<SpriteRenderer>().color = Color.red; }
         }

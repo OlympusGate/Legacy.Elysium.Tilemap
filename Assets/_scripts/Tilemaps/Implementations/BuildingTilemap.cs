@@ -22,6 +22,12 @@ namespace Elysium.Tilemaps
             this.activeStatusTimer.OnTimerEnd += Deactivate;
         }
 
+        ~BuildingTileObject()
+        {
+            activeStatusTimer.isDestroyed = true;
+            activeStatusTimer.SetTime(0.1f);
+        }
+
         public void Deactivate()
         {
             if (!functional) { return; }

@@ -73,9 +73,9 @@ namespace Elysium.Tilemaps
                 return false;
             }
 
-            TilemapDictionary.Remove(_position);
             OnValueRemoved?.Invoke(_position);
             OnValueChanged?.Invoke(_position);
+            TilemapDictionary.Remove(_position);
             return true;
         }
     }

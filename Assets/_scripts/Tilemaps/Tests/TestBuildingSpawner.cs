@@ -40,6 +40,14 @@ namespace Elysium.Tilemaps
                 var ctx = smartTilemap.GetBuilding(pos);
                 if (ctx != null) { ctx.Repair(); }
             }
+
+            if (Input.GetKeyDown(KeyCode.A))
+            {
+                var pos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+                pos.z = 0;
+
+                smartTilemap.DemolishBuilding(pos);
+            }
         }
 
         private void UpdateColor(Vector3Int _position, Color _color)
