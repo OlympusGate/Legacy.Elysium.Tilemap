@@ -1,6 +1,8 @@
 # Documentation
 
-- This is intended to extend the functionality of Unity's Tilemap, by letting you add custom classes (and their respective visuals) to each tile.
+This is intended to extend the functionality of Unity's Tilemap, by letting you add custom classes (and their respective visuals) to each tile.
+
+https://gyazo.com/3534584f594221563011f2dcbcb5ef96
 
 # Instructions
 1- Create a new custom type (that will be contained within each tile) that extends SmartTileObject. 
