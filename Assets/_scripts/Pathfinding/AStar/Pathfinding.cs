@@ -90,6 +90,8 @@ namespace Elysium.AI.Pathfinding
         private List<Node> CalculatePath(Node _end)
         {
             List<Node> path = new List<Node>();
+            nodes = new List<Node>();
+            
             path.Add(_end);
             Node current = _end;
 
