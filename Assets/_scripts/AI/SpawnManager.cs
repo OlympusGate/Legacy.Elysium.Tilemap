@@ -6,6 +6,7 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
+[RequireComponent(typeof(TileValidator))]
 public class SpawnManager : MonoBehaviour
 {
     // ----------------------- DEBUG ONLY ~> REMOVE LATER -----------------------
@@ -16,65 +17,30 @@ public class SpawnManager : MonoBehaviour
     // --------------------------------------------------------------------------
 
     [SerializeField] private GameObject enemyPrefab;
-    [SerializeField] private Tilemap spawnTilemap;
-    [SerializeField] private Tilemap pathTilemap;
 
-    private Dictionary<Vector3Int, Vector3> SpawnTiles { get; set; }
-    private Dictionary<Vector3Int, Vector3> TargetTiles { get; set; }
-    private Dictionary<Vector3Int, Vector3> PathTiles { get; set; }
+    private TileValidator tileValidator;
 
-    private void Awake()
+    private List<Vector3> pathTiles;
+    private List<Vector3> spawnTiles;
+    private List<Vector3> targetTile;
+
+    private void Awake() => tileValidator = GetComponent<TileValidator>();
+
+    private void Start() => BindValidTiles();
+
+    private void BindValidTiles()
     {
-        SpawnTiles = new Dictionary<Vector3Int, Vector3>();
-        TargetTiles = new Dictionary<Vector3Int, Vector3>();
-        PathTiles = new Dictionary<Vector3Int, Vector3>();
-        SetupSpawnTilemap();
-        SetupPathTilemap();
-    }
-
-    private void SetupPathTilemap()
-    {
-        foreach (var position in pathTilemap.cellBounds.allPositionsWithin)
-        {
-            if (pathTilemap.HasTile(position))
-            {
-                var cell = pathTilemap.GetTile(position);
-
-                if (cell is PathTile)
-                {
-                    var center = pathTilemap.GetCellCenterWorld(position);
-                    PathTiles.Add(position, center);
-                }
-            }
-        }
-    }
-
-    private void SetupSpawnTilemap()
-    {
-        foreach (var position in spawnTilemap.cellBounds.allPositionsWithin)
-        {
-            if (spawnTilemap.HasTile(position))
-            {
-                var cell = spawnTilemap.GetTile(position);
-
-                if (cell is SpawnTile)
-                {
-                    var center = spawnTilemap.GetCellCenterWorld(position);
-                    SpawnTiles.Add(position, center);
-                }
-                else if (cell is TargetTile)
-                {
-                    var center = spawnTilemap.GetCellCenterWorld(position);
-                    TargetTiles.Add(position, center);
-                }
-            }
-        }
-    }
+        pathTiles = tileValidator.GetWorldPositions(new string[] { "PathTile", "SpawnTile", "TargetTile" });
+        spawnTiles = tileValidator.GetWorldPositions(new string[] { "SpawnTile" });
+        targetTile = tileValidator.GetWorldPositions(new string[] { "TargetTile" });
+    }    
 
     private void Spawn()
     {
-        var path = CalculateEnemyPath(SpawnTiles.First().Value, TargetTiles.First().Value);
-        var enemy = Instantiate(enemyPrefab, SpawnTiles.First().Value, transform.rotation).GetComponent<AI_Movement>();
+        var origin = spawnTiles.First();
+        var destination = targetTile.First();
+        var path = CalculateEnemyPath(origin, destination);
+        var enemy = Instantiate(enemyPrefab, origin, transform.rotation).GetComponent<AI_Movement>();
         enemy.Init(path);
     }
 
@@ -82,7 +48,7 @@ public class SpawnManager : MonoBehaviour
     {
         Pathfinding pathfinding = new Pathfinding();
 
-        foreach (Vector3 tile in PathTiles.Values)
+        foreach (Vector3 tile in pathTiles)
         {
             var n = GetNeighbours(tile);
             pathfinding.AddNode(tile, n);                    
@@ -103,7 +69,7 @@ public class SpawnManager : MonoBehaviour
     {
         List<Vector3> neighbours = new List<Vector3>();
 
-        foreach (var possibleNeighbour in PathTiles.Values)
+        foreach (var possibleNeighbour in pathTiles)
         {
             if (possibleNeighbour == _tile) { continue; }
             if (Vector3.Distance(_tile, possibleNeighbour) == 1)

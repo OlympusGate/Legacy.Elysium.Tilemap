@@ -6,6 +6,17 @@ namespace Elysium.Tilemaps
 {
     public class BuildingTilemap : SmartTilemap<BuildingTileObject>
     {
+        private TileValidator tileValidator;
+        private List<Vector3Int> buildingTiles;
+
+        protected override void Awake()
+        {
+            base.Awake();
+            tileValidator = GetComponent<TileValidator>();
+        }
+
+        private void Start() => buildingTiles = tileValidator.GetCellPositions(new string[] { "BuildingTile" });
+
         public BuildingTileObject GetBuilding(Vector2 _position)
         {
             Vector3Int gridPosition = Tilemap.WorldToCell(_position);
@@ -22,6 +33,9 @@ namespace Elysium.Tilemaps
         public bool ConstructBuilding(Vector2 _position, TestBuildingObject _building)
         {
             var tilePosition = Tilemap.WorldToCell(_position);
+            if (!buildingTiles.Contains(tilePosition)) { Debug.Log("Not valid building tile."); return false; }
+
+            
             BuildingTileObject buildingObject = new BuildingTileObject(tilePosition, Properties.TriggerOnValueChanged, _building);
 
             Vector3Int gridPosition = Tilemap.WorldToCell(_position);
