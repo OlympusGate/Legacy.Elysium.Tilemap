@@ -132,10 +132,10 @@ GameObject:
   - component: {fileID: 444270918}
   - component: {fileID: 444270920}
   - component: {fileID: 444270919}
+  - component: {fileID: 444270924}
   - component: {fileID: 444270922}
   - component: {fileID: 444270923}
   - component: {fileID: 444270921}
-  - component: {fileID: 444270924}
   m_Layer: 0
   m_Name: Buildings
   m_TagString: Untagged
@@ -1825,7 +1825,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1265364455
 Transform:
   m_ObjectHideFlags: 0
