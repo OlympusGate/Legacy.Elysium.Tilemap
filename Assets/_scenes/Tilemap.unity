@@ -132,7 +132,6 @@ GameObject:
   - component: {fileID: 444270918}
   - component: {fileID: 444270920}
   - component: {fileID: 444270919}
-  - component: {fileID: 444270924}
   - component: {fileID: 444270922}
   - component: {fileID: 444270923}
   - component: {fileID: 444270921}
@@ -598,20 +597,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 96256137c4f584d45b5db0195d4bf817, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &444270924
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 444270917}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b393dc917f70caa4a887e8993311b4d6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  validTiles:
-  - {fileID: 11400000, guid: 2a264ec58f63d4842bd91bbb11bca4f6, type: 2}
 --- !u!1 &475295430
 GameObject:
   m_ObjectHideFlags: 0
@@ -1817,7 +1802,6 @@ GameObject:
   - component: {fileID: 1265364455}
   - component: {fileID: 1265364460}
   - component: {fileID: 1265364459}
-  - component: {fileID: 1265364456}
   - component: {fileID: 1265364457}
   m_Layer: 0
   m_Name: Pathfinding
@@ -1840,22 +1824,6 @@ Transform:
   m_Father: {fileID: 800931875}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1265364456
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1265364454}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b393dc917f70caa4a887e8993311b4d6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  validTiles:
-  - {fileID: 11400000, guid: c09a8d9bfc3dbd744b5ba78db9e79130, type: 2}
-  - {fileID: 11400000, guid: 1b5123615a39ed240bfeaa155b89085f, type: 2}
-  - {fileID: 11400000, guid: 4492675ffb1ec2142bcb664531784b02, type: 2}
 --- !u!114 &1265364457
 MonoBehaviour:
   m_ObjectHideFlags: 0

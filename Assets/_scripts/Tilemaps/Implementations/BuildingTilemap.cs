@@ -1,21 +1,26 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Tilemaps;
 
 namespace Elysium.Tilemaps
 {
     public class BuildingTilemap : SmartTilemap<BuildingTileObject>
     {
-        private TileValidator tileValidator;
+        private Tilemap tilemap;
         private List<Vector3Int> buildingTiles;
 
         protected override void Awake()
         {
             base.Awake();
-            tileValidator = GetComponent<TileValidator>();
+            tilemap = GetComponent<Tilemap>();
         }
 
-        private void Start() => buildingTiles = tileValidator.GetCellPositions(new string[] { "BuildingTile" });
+        private void Start()
+        {
+            TileValidator tileValidator = new TileValidator(tilemap);
+            buildingTiles = tileValidator.GetCellPositions(new string[] { "BuildingTile" });
+        }
 
         public BuildingTileObject GetBuilding(Vector2 _position)
         {

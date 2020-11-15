@@ -6,7 +6,6 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
-[RequireComponent(typeof(TileValidator))]
 public class SpawnManager : MonoBehaviour
 {
     // ----------------------- DEBUG ONLY ~> REMOVE LATER -----------------------
@@ -18,18 +17,19 @@ public class SpawnManager : MonoBehaviour
 
     [SerializeField] private GameObject enemyPrefab;
 
-    private TileValidator tileValidator;
+    private Tilemap tilemap;
 
     private List<Vector3> pathTiles;
     private List<Vector3> spawnTiles;
     private List<Vector3> targetTile;
 
-    private void Awake() => tileValidator = GetComponent<TileValidator>();
+    private void Awake() => tilemap = GetComponent<Tilemap>();
 
     private void Start() => BindValidTiles();
 
     private void BindValidTiles()
     {
+        TileValidator tileValidator = new TileValidator(tilemap);
         pathTiles = tileValidator.GetWorldPositions(new string[] { "PathTile", "SpawnTile", "TargetTile" });
         spawnTiles = tileValidator.GetWorldPositions(new string[] { "SpawnTile" });
         targetTile = tileValidator.GetWorldPositions(new string[] { "TargetTile" });

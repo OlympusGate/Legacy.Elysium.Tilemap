@@ -3,19 +3,23 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
-public class TileValidator : MonoBehaviour
+public class TileValidator
 {
     public struct TileDetails
     {
         public List<Vector3> worldPositions;
         public List<Vector3Int> tilePositions;
     }
-
-    [SerializeField] private List<Tile> validTiles;
     
     public Dictionary<string, TileDetails> ValidTiles { get; set; }
 
     private Tilemap tilemap;
+
+    public TileValidator(Tilemap _tilemap)
+    {
+        this.tilemap = _tilemap;
+        SetupTilemap();
+    }
 
     public List<Vector3> GetWorldPositions(string[] _key)
     {
@@ -45,12 +49,6 @@ public class TileValidator : MonoBehaviour
         return results;
     }
 
-    private void Awake()
-    { 
-        tilemap = GetComponent<Tilemap>();
-        SetupTilemap();
-    }    
-
     private void SetupTilemap()
     {
         ValidTiles = new Dictionary<string, TileDetails>();
@@ -60,17 +58,8 @@ public class TileValidator : MonoBehaviour
             if (tilemap.HasTile(position))
             {
                 var cell = tilemap.GetTile(position);
-
-                for (int i = 0; i < validTiles.Count; i++)
-                {
-                    if (validTiles[i] == null) { continue; }
-
-                    if (cell.GetType() == validTiles[i].GetType())
-                    {
-                        var center = tilemap.GetCellCenterWorld(position);
-                        AddElement(cell.GetType().ToString(), center, position);
-                    }
-                }                
+                var center = tilemap.GetCellCenterWorld(position);
+                AddElement(cell.GetType().ToString(), center, position);
             }
         }
     }
